@@ -37,6 +37,7 @@ Shader "Custom/TestiShader"
             {
                 float4 positionHCS : SV_POSITION;
                 float3 positionWS : TEXTCOORD0;
+                half3 normal    : TEXCOORD0;
                 
             };
 
