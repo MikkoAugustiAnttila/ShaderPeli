@@ -1,98 +1,93 @@
-Shader "Custom/PaintTextureShader"
+Shader "Custom/TextureSample"
 {
     Properties
     {
-        _MainTexA ("Texture A", 2D) = "white" {}
-        _MainTexB ("Texture B", 2D) = "white" {}
-        _BlendProperty ("Blend", Range(0, 1)) = 0.5
+        _MainTex("Main Texture", 2D) = "white" {}
+        _TaskTex("Main Texture", 2D) = "white" {}
     }
-
     SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags { "RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline" "Queue" = "Geometry" }
         Pass
         {
             Name "Depth"
             Tags { "LightMode" = "DepthOnly" }
-
+            
             Cull Back
             ZTest LEqual
             ZWrite On
             ColorMask R
-
+            
             HLSLPROGRAM
-
+            
             #pragma vertex DepthVert
             #pragma fragment DepthFrag
-
+            
             #include "../../Common/DepthNormalsOnly.hlsl"
 
+             ENDHLSL
+            }
+
+            Pass
+            {
+                Name "Normals"
+                Tags { "LightMode" = "DepthNormalsOnly" }
+                
+                Cull Back
+                ZTest LEqual
+                ZWrite On
+                
+                HLSLPROGRAM
+                
+                #pragma vertex DepthNormalsVert
+                #pragma fragment DepthNormalsFrag
+
+                #include "../../Common/DepthOnly.hlsl"
+                
             ENDHLSL
         }
-
         Pass
         {
-            Name "Normals"
-            Tags { "LightMode" = "DepthNormalsOnly" }
-
-            Cull Back
-            ZTest LEqual
-            ZWrite On
-
             HLSLPROGRAM
-
-            #pragma vertex DepthNormalsVert
-            #pragma fragment DepthNormalsFrag
-
-            #include "../../Common/DepthOnly.hlsl"
-
-            ENDHLSL
-        }
-
-        Pass
-        {
-            CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #include "UnityCG.cginc"
-
+            
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
+            TEXTURE2D(_TaskTex);
+            SAMPLER(sampler_TaskTex);
+            
+            CBUFFER_START(UnityPerMaterial)
+            float4 _MainTex_ST;
+            CBUFFER_END
             struct Attributes
             {
                 float4 positionOS : POSITION;
                 float2 uv : TEXCOORD0;
             };
-
             struct Varyings
             {
-                float2 uv : TEXCOORD0;
                 float4 positionHCS : SV_POSITION;
+                float2 uv : TEXCOORD0;
             };
-
-            sampler2D _MainTexA;
-            sampler2D _MainTexB;
-            float4 _MainTexA_ST;
-            float4 _MainTexB_ST;
-            float _BlendProperty;
-
-            Varyings vert(Attributes input)
+            
+            Varyings vert (Attributes input)
             {
                 Varyings output;
-                output.positionHCS = UnityObjectToClipPos(input.positionOS);
-                
-                output.uv = TRANSFORM_TEX(input.uv, _MainTexA);
-                output.uv = lerp(output.uv, TRANSFORM_TEX(input.uv, _MainTexB), _BlendProperty);
-
+                output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
+                output.uv = input.uv * _MainTex_ST.xy + _MainTex_ST.zw;
                 return output;
             }
-
-            fixed4 frag(Varyings input) : SV_Target
+            float4 frag (Varyings input) : SV_TARGET
             {
-                fixed4 texA = tex2D(_MainTexA, input.uv);
-                fixed4 texB = tex2D(_MainTexB, input.uv);
-                return lerp(texA, texB, _BlendProperty);
+                const float4 color1 = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+                const float4 color2 = SAMPLE_TEXTURE2D(_TaskTex, sampler_TaskTex, input.uv);
+                const float4 finalColor = lerp(color1, color2, (sin(input.uv.x * 5) + 1) / 2);
+                
+                return finalColor;
             }
-
-            ENDCG
+            ENDHLSL
         }
     }
 }

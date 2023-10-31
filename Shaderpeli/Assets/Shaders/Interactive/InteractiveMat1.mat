@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TaskShaderMat3
-  m_Shader: {fileID: 4800000, guid: 8b4be74f0f5562c4287fdb7097822517, type: 3}
+  m_Name: InteractiveMat1
+  m_Shader: {fileID: 4800000, guid: e7923e545228fd9418c32697e58a3072, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,25 +23,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Color:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e89919cb73b29ab4d8f61ad68756745a, type: 3}
-        m_Scale: {x: 4, y: 4}
-        m_Offset: {x: 0.85, y: 0}
-    - _MainTexA:
-        m_Texture: {fileID: 2800000, guid: e89919cb73b29ab4d8f61ad68756745a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTexB:
-        m_Texture: {fileID: 2800000, guid: 727a75301c3d24613a3ebcec4a24c2c8, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _TaskTex:
-        m_Texture: {fileID: 2800000, guid: e0acda4808d65fd4f8dc607254aa2b71, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BlendProperty: 0
-    - _BlendSpeed: 0.775
-    m_Colors: []
+    - _DistanceAttenuation: 3
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _PlayerPosition: {r: 42.17, g: 0.08, b: 0.11, a: 0}
   m_BuildTextureStacks: []
