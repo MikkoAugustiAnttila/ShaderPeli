@@ -1,3 +1,4 @@
+//ChatGPT tekoälyä hyödynnetty suorituksessa. (Ei täysin tekoälyllä tuotettu, vaan sille annettu koodia ja pyydetty korjaamaan tai tekemään toisella tavalla.) (Lisätty jälkikäteen koska huomattu että täytyy mainita vasta myöhemmin.)
 Shader "Example/URPUnlitShaderMoveUp_WorldSpace"
 {
     Properties
