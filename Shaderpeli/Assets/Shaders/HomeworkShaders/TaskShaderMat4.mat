@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TaskShaderMat3
+  m_Name: TaskShaderMat4
   m_Shader: {fileID: 4800000, guid: 8b4be74f0f5562c4287fdb7097822517, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -43,5 +43,7 @@ Material:
     m_Floats:
     - _BlendProperty: 0
     - _BlendSpeed: 0.775
-    m_Colors: []
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _IntersectionColor: {r: 0, g: 0, b: 1, a: 1}
   m_BuildTextureStacks: []

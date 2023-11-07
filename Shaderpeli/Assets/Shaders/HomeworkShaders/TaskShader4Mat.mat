@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: InteractiveMat
-  m_Shader: {fileID: 4800000, guid: b1084ae427d9920439999f2c54d984bb, type: 3}
+  m_Name: TaskShader4Mat
+  m_Shader: {fileID: 4800000, guid: 1da7348c5cc5eea4ebb385d3a5fcf1aa, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -22,14 +22,8 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e0acda4808d65fd4f8dc607254aa2b71, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+    m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - _DistanceAttenuation: 2.54
-    m_Colors:
-    - _PlayerPosition: {r: 30.82, g: 0.49500012, b: 0.38, a: 0}
+    m_Floats: []
+    m_Colors: []
   m_BuildTextureStacks: []

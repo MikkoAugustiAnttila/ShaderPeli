@@ -16,7 +16,7 @@ Shader "Example/RealShader"
     SubShader
     {
         Tags {"RenderType"="Opaque" "RenderPipeline" = "UniversalPipeline" "Queue"="Geometry"}
-
+        
         Pass
         {
             Name "ForwardLit"

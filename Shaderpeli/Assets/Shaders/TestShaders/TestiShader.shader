@@ -12,7 +12,24 @@ Shader "Custom/TestiShader"
             "Queue" = "Geometry"
             
         }
-        
+         Pass
+            {
+                Name "Normals"
+                Tags { "LightMode" = "DepthNormalsOnly" }
+                
+                Cull Back
+                ZTest LEqual
+                ZWrite On
+                
+                HLSLPROGRAM
+                
+                #pragma vertex DepthNormalsVert
+                #pragma fragment DepthNormalsFrag
+
+                #include "../../Common/DepthOnly.hlsl"
+                
+            ENDHLSL
+        }
         Pass
         {
             Name "OmaPass"
