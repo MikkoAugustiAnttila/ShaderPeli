@@ -3593,8 +3593,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planeMaterial: {fileID: 2100000, guid: f585c21bd6242b64eb3863ce51d08fee, type: 2}
   computeShader: {fileID: 7200000, guid: ba8c1b5ec9882cc4d9baed50ea2c82ba, type: 3}
-  cellColor: {r: 0, g: 1, b: 0, a: 1}
-  simulationSpeed: 1
+  cellColor: {r: 0.19282661, g: 0.6509434, b: 0.19282661, a: 1}
+  updateDelay: 0.1
   generationType: 0
 --- !u!1 &1353296286
 GameObject:

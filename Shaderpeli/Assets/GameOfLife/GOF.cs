@@ -7,9 +7,10 @@ public class GOF : MonoBehaviour
 
     [Header("Game of Life Settings")]
     public Color cellColor = Color.white;
+    public float updateDelay = 0.1f; // Add a variable for update delay in seconds
 
-    private enum generationOptions { Random, FullTexture, RPentomino, Acorn, GosperGun }
-    [SerializeField] private generationOptions generationType;
+    private enum GenerationOptions { Random, FullTexture, RPentomino, Acorn, GosperGun }
+    [SerializeField] private GenerationOptions generationType;
 
     private RenderTexture texture1, texture2;
     private int currentTextureIndex = 1;
@@ -27,7 +28,14 @@ public class GOF : MonoBehaviour
 
     void Update()
     {
-        UpdateSimulation();
+        timeSinceLastUpdate += Time.deltaTime;
+
+        // Update the simulation when the delay is reached
+        if (timeSinceLastUpdate >= updateDelay)
+        {
+            timeSinceLastUpdate = 0f;
+            UpdateSimulation();
+        }
     }
 
     void OnDestroy()
