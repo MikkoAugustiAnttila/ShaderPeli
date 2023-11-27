@@ -21,6 +21,7 @@ public class GOF : MonoBehaviour
 
     void Start()
     {
+        timeSinceLastUpdate = updateDelay;
         InitializeTextures();
         InitializeComputeShader();
         InitializeSimulation();

@@ -103,8 +103,9 @@ void CSInit(uint3 id : SV_DispatchThreadID) {
 
 [numthreads(GROUP_SIZE_X, GROUP_SIZE_Y, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID) {
-    int sum = 0;
+    int liveNeighbors = 0;
 
+    // Count live neighbors
     for (int x = -1; x <= 1; x++) {
         for (int y = -1; y <= 1; y++) {
             if (x == 0 && y == 0) continue;
@@ -113,27 +114,33 @@ void CSMain(uint3 id : SV_DispatchThreadID) {
             float2 newPosition = position + offset;
 
             float4 result = Result[newPosition];
-            if (result.x > 0 || result.y > 0 || result.x > 0) {
-                sum += 1;
-            } else {
-                sum += 0;
+            if (result.x > 0 || result.y > 0 || result.z > 0) {
+                liveNeighbors += 1;
             }
-            
-
         }
     }
 
     // Use the Color directly
     float4 currentResult = Result[id.xy];
-    
-    if (((currentResult.x > 0 || currentResult.y > 0 || currentResult.z > 0) && (sum == 2 || sum == 3)) || ((currentResult.x == 0 && currentResult.y == 0 && currentResult.z == 0) && sum == 3))
-    {
-        // If the conditions are met, set the color to the specified Color
-        Result[id.xy] = Color;
-    }
-    else
-    {
-        // If the conditions are not met, set the color to black (float4(0, 0, 0, 1))
-        Result[id.xy] = float4(0, 0, 0, 1);
+
+    if (currentResult.x > 0 || currentResult.y > 0 || currentResult.z > 0) {
+        // Any live cell with fewer than two live neighbors dies
+        // Any live cell with more than three live neighbors dies
+        if (liveNeighbors < 2 || liveNeighbors > 3) {
+            Result[id.xy] = float4(0, 0, 0, 1);
+        }
+        // Other cells survive
+        else {
+            Result[id.xy] = Color;
+        }
+    } else {
+        // Any dead cell with exactly three live neighbors becomes a live cell (revives)
+        if (liveNeighbors == 3) {
+            Result[id.xy] = Color;
+        } else {
+            // Dead cells with other than three live neighbors remain dead
+            Result[id.xy] = float4(0, 0, 0, 1);
+        }
     }
 }
+
