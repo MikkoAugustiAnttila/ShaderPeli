@@ -6,7 +6,10 @@ public class GOF : MonoBehaviour
     public ComputeShader computeShader;
 
     [Header("Game of Life Settings")]
-    public Color cellColor = Color.white; // Color property for inspector
+    public Color cellColor = Color.white;
+
+    private enum generationOptions {Random, PseudoRandom}
+    [SerializeField] private generationOptions generationType;
 
     private RenderTexture texture1, texture2;
     private int currentTextureIndex = 1;
@@ -62,7 +65,10 @@ public class GOF : MonoBehaviour
     void UpdateSimulation()
     {
         int currentUpdateKernel = update2Kernel;
+    
+        // Pass the entire color as a float4 to the compute shader
         computeShader.SetVector("Color", new Vector4(cellColor.r, cellColor.g, cellColor.b, cellColor.a));
+
         ExecuteSimulationPhase(currentUpdateKernel);
         planeMaterial.SetTexture("_MainTex", texture1);
     }
