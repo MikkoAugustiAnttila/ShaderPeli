@@ -109,11 +109,8 @@ void CSMain(uint3 id : SV_DispatchThreadID) {
     for (int x = -1; x <= 1; x++) {
         for (int y = -1; y <= 1; y++) {
             if (x == 0 && y == 0) continue;
-            float2 position = float2(id.x, id.y);
-            float2 offset = float2(x, y);
-            float2 newPosition = position + offset;
-
-            float4 result = Result[newPosition];
+            int2 neighborPos = int2(id.x + x, id.y + y);
+            float4 result = Result[neighborPos];
             if (result.x > 0 || result.y > 0 || result.z > 0) {
                 liveNeighbors += 1;
             }
