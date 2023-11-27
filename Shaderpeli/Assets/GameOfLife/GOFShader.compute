@@ -13,9 +13,33 @@ float rand(float2 co) {
 
 float4 Color;
 
+uniform int GenerationType;
+
 [numthreads(GROUP_SIZE_X, GROUP_SIZE_Y, 1)]
 void CSInit(uint3 id : SV_DispatchThreadID) {
-    Result[id.xy] = rand(id.xy) > 0.75 ? Color : float4(0, 0, 0, 1);
+    switch (GenerationType) {
+    case 0:  // Random
+        Result[id.xy] = rand(id.xy) > 0.75 ? Color : float4(0, 0, 0, 1);
+        break;
+    case 1:  // FullTexture
+        Result[id.xy] = Color;  // Placeholder for FullTexture generation
+        break;
+    case 2:  // RPentomino
+        // Handle RPentomino generation
+        // Set Result[id.xy] accordingly
+        break;
+    case 3:  // Acorn
+        // Handle Acorn generation
+        // Set Result[id.xy] accordingly
+        break;
+    case 4:  // GosperGun
+        // Handle GosperGun generation
+        // Set Result[id.xy] accordingly
+        break;
+    default:
+        Result[id.xy] = rand(id.xy) > 0.75 ? Color : float4(0, 0, 0, 1); //Default to Random
+        break;
+    }
 }
 
 [numthreads(GROUP_SIZE_X, GROUP_SIZE_Y, 1)]

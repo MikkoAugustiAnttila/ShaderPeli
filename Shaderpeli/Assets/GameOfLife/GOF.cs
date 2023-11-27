@@ -8,7 +8,7 @@ public class GOF : MonoBehaviour
     [Header("Game of Life Settings")]
     public Color cellColor = Color.white;
 
-    private enum generationOptions {Random, PseudoRandom}
+    private enum generationOptions { Random, FullTexture, RPentomino, Acorn, GosperGun }
     [SerializeField] private generationOptions generationType;
 
     private RenderTexture texture1, texture2;
@@ -59,13 +59,14 @@ public class GOF : MonoBehaviour
 
     void InitializeSimulation()
     {
+        SetGenerationType();
         ExecuteSeedKernel();
     }
 
     void UpdateSimulation()
     {
         int currentUpdateKernel = update2Kernel;
-    
+
         // Pass the entire color as a float4 to the compute shader
         computeShader.SetVector("Color", new Vector4(cellColor.r, cellColor.g, cellColor.b, cellColor.a));
 
@@ -94,5 +95,11 @@ public class GOF : MonoBehaviour
     {
         texture1.Release();
         texture2.Release();
+    }
+
+    void SetGenerationType()
+    {
+        int generationTypeValue = (int)generationType;
+        computeShader.SetInt("GenerationType", generationTypeValue);
     }
 }
