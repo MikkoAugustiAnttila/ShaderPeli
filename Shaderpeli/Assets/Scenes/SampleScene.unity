@@ -839,13 +839,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6811759, y: -0, z: -0, w: 0.73211986}
-  m_LocalPosition: {x: 136.97, y: 14.889999, z: -1.8800001}
+  m_LocalRotation: {x: -0, y: 0.86649114, z: -0.49919245, w: 0}
+  m_LocalPosition: {x: 135.41, y: 14.889999, z: 11.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 85.871, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 59.893, y: 180, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3594,6 +3594,8 @@ MonoBehaviour:
   planeMaterial: {fileID: 2100000, guid: f585c21bd6242b64eb3863ce51d08fee, type: 2}
   computeShader: {fileID: 7200000, guid: ba8c1b5ec9882cc4d9baed50ea2c82ba, type: 3}
   cellColor: {r: 0, g: 1, b: 0, a: 1}
+  simulationSpeed: 1
+  generationType: 0
 --- !u!1 &1353296286
 GameObject:
   m_ObjectHideFlags: 0

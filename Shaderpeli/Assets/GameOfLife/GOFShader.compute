@@ -22,19 +22,78 @@ void CSInit(uint3 id : SV_DispatchThreadID) {
         Result[id.xy] = rand(id.xy) > 0.75 ? Color : float4(0, 0, 0, 1);
         break;
     case 1:  // FullTexture
-        Result[id.xy] = Color;  // Placeholder for FullTexture generation
+        if (id.x % 7 == 0 || id.y % 3 == 0)
+            Result[id.xy] = Color;
+        else
+            Result[id.xy] = float4(0, 0, 0, 1);
         break;
     case 2:  // RPentomino
+        if ((id.x == 256 && id.y == 256) ||
+            (id.x == 255 && id.y == 256) ||
+            (id.x == 256 && id.y == 255) ||
+            (id.x == 257 && id.y == 255) ||
+            (id.x == 256 && id.y == 257))
+        {
+            Result[id.xy] = Color;
+        }
         // Handle RPentomino generation
         // Set Result[id.xy] accordingly
         break;
     case 3:  // Acorn
-        // Handle Acorn generation
-        // Set Result[id.xy] accordingly
+        if ((id.x == 256 && id.y == 256 ) ||
+            (id.x == 257 && id.y == 257 ) ||
+            (id.x == 254 && id.y == 255 ) ||
+            (id.x == 258 && id.y == 257 ) ||
+            (id.x == 259 && id.y == 257 ) ||
+            (id.x == 254 && id.y == 257 ) ||
+            (id.x == 253 && id.y == 257 )
+            )
+        {
+            Result[id.xy] = Color;
+        }
         break;
     case 4:  // GosperGun
-        // Handle GosperGun generation
-        // Set Result[id.xy] accordingly
+        if (
+        (id.x == 256 && id.y == 256) ||
+        (id.x == 255 && id.y == 255) ||
+        (id.x == 254 && id.y == 254) ||
+        (id.x == 255 && id.y == 256) ||
+        (id.x == 255 && id.y == 257) ||
+        (id.x == 254 && id.y == 258) ||
+        (id.x == 253 && id.y == 256) ||
+        (id.x == 252 && id.y == 259) ||
+        (id.x == 252 && id.y == 253) ||
+        (id.x == 251 && id.y == 259) ||
+        (id.x == 251 && id.y == 253) ||
+        (id.x == 250 && id.y == 258) ||
+        (id.x == 250 && id.y == 254) ||
+        (id.x == 249 && id.y == 256) ||
+        (id.x == 249 && id.y == 255) ||
+        (id.x == 249 && id.y == 257) ||
+        (id.x == 240 && id.y == 256) ||
+        (id.x == 240 && id.y == 255) ||
+        (id.x == 239 && id.y == 256) ||
+        (id.x == 239 && id.y == 255) ||
+        (id.x == 259 && id.y == 255) ||
+        (id.x == 259 && id.y == 254) ||
+        (id.x == 259 && id.y == 253) ||
+        (id.x == 260 && id.y == 255) ||
+        (id.x == 260 && id.y == 254) ||
+        (id.x == 260 && id.y == 253) ||
+        (id.x == 261 && id.y == 256) ||
+        (id.x == 261 && id.y == 252) ||
+        (id.x == 263 && id.y == 257) ||
+        (id.x == 263 && id.y == 256) ||
+        (id.x == 263 && id.y == 252) ||
+        (id.x == 263 && id.y == 251) ||
+        (id.x == 273 && id.y == 254) ||
+        (id.x == 273 && id.y == 253) ||
+        (id.x == 274 && id.y == 254) ||
+        (id.x == 274 && id.y == 253)
+        )
+        {
+            Result[id.xy] = Color;
+        }
         break;
     default:
         Result[id.xy] = rand(id.xy) > 0.75 ? Color : float4(0, 0, 0, 1); //Default to Random
@@ -60,25 +119,12 @@ void CSMain(uint3 id : SV_DispatchThreadID) {
                 sum += 0;
             }
             
-            /*
-            float resultX = Result[newPosition].x;
-            if (resultX > 0) {
-                sum += 1;
-            } else {
-                sum += 0;
-            }
-            */
+
         }
     }
 
     // Use the Color directly
     float4 currentResult = Result[id.xy];
-
-    if ((currentResult.x > 0 && (sum == 2 || sum == 3)) || (currentResult.x == 0 && sum == 3))
-    {
-        // If the conditions are met, set the color to the specified Color
-        Result[id.xy] = Color;
-    }
     
     if (((currentResult.x > 0 || currentResult.y > 0 || currentResult.z > 0) && (sum == 2 || sum == 3)) || ((currentResult.x == 0 && currentResult.y == 0 && currentResult.z == 0) && sum == 3))
     {
