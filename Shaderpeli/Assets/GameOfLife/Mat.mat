@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Unlit
-  m_Shader: {fileID: 4800000, guid: 2df563559c8f07a4d8dd442626a70cb9, type: 3}
+  m_Name: Mat
+  m_Shader: {fileID: 4800000, guid: 2cf6548d38561954f9bfbdd3cfa72119, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []

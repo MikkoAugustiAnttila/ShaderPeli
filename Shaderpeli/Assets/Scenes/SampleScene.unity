@@ -3534,7 +3534,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f585c21bd6242b64eb3863ce51d08fee, type: 2}
+  - {fileID: 2100000, guid: f64973bb500cd764b80497696dae804a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3588,14 +3588,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1320875326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 538de01a681089b4180ac6b683f7937a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2486c8ebb924f224f8355875b67a170c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planeMaterial: {fileID: 2100000, guid: f585c21bd6242b64eb3863ce51d08fee, type: 2}
-  computeShader: {fileID: 7200000, guid: ba8c1b5ec9882cc4d9baed50ea2c82ba, type: 3}
-  cellColor: {r: 0.8396226, g: 0.019010298, b: 0.019010298, a: 1}
-  updateDelay: 0.05
-  generationType: 2
+  initializationMode: 4
+  gameOfLifeMaterial: {fileID: 2100000, guid: f64973bb500cd764b80497696dae804a, type: 2}
+  livingCellColor: {r: 0.571258, g: 0.33641866, b: 0.6792453, a: 1}
+  updateDelay: 0.1
+  gameOfLifeComputeShader: {fileID: 7200000, guid: 28fc2a90d1313064da105dcfdf92a867,
+    type: 3}
 --- !u!1 &1353296286
 GameObject:
   m_ObjectHideFlags: 0

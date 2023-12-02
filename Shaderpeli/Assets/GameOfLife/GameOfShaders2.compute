@@ -1,0 +1,158 @@
+﻿#pragma kernel CSMain
+#pragma kernel InitFullTexture
+#pragma kernel InitRPentomino
+#pragma kernel InitAcorn
+#pragma kernel InitGun
+
+// Output texture for the cellular automaton
+RWTexture2D<float4> OutputTexture;
+
+// Input texture representing the current state of cells
+Texture2D<float> InputTexture;
+
+// Color of living cells
+float4 LivingCellColor;
+
+// Main compute shader for updating cellular automaton state
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    // Extract the current pixel coordinates
+    int x = int(id.x);
+    int y = int(id.y);
+
+    // Count the number of living neighbors around the current cell
+    float count = 0;
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            if (i != 0 || j != 0)
+            {
+                float4 neighborColor = InputTexture.Load(float3(x + i, y + j, 0));
+                if (neighborColor.r + neighborColor.g + neighborColor.b != 0) {
+                    count += 1.0;
+                } else {
+                    count += 0.0;
+                }
+
+
+
+            }
+        }
+    }
+
+    float4 currentCellColor = InputTexture.Load(int3(x, y, 0));
+    bool currentCellState = (currentCellColor.r + currentCellColor.g + currentCellColor.b) > 0.0;
+
+
+    bool nextState = false;
+
+    if (currentCellState)
+    {
+        nextState = count == 2 || count == 3;
+    }
+    else
+    {
+        nextState = count == 3;
+    }
+
+    // Use LivingCellColor for living cells
+    float4 finalColor = nextState ? LivingCellColor : float4(0.0, 0.0, 0.0, 1.0);
+
+    // Write the final color to the output texture
+    OutputTexture[id.xy] = finalColor;
+}
+
+[numthreads(8, 8, 1)]
+void InitFullTexture(uint3 id : SV_DispatchThreadID)
+{
+    // Set living cells based on a pattern (every 7th column or every 3rd row)
+    bool isLivingCell = (id.x % 7 == 0) || (id.y % 3 == 0);
+
+    OutputTexture[id.xy] = isLivingCell ? LivingCellColor : float4(0.0, 0.0, 0.0, 1.0);
+}
+
+[numthreads(8, 8, 1)]
+void InitRPentomino(uint3 id : SV_DispatchThreadID)
+{
+    bool isLivingCell = false;
+
+    if ((id.x == 256 && id.y == 256) ||
+        (id.x == 255 && id.y == 256) ||
+        (id.x == 256 && id.y == 255) ||
+        (id.x == 257 && id.y == 255) ||
+        (id.x == 256 && id.y == 257))
+    {
+        isLivingCell = true;
+    }
+
+    OutputTexture[id.xy] = isLivingCell ? LivingCellColor : float4(0.0, 0.0, 0.0, 1.0);
+}
+
+[numthreads(8, 8, 1)]
+void InitAcorn(uint3 id : SV_DispatchThreadID)
+{
+    bool isLivingCell = false;
+
+    if ((id.x == 256 && id.y == 256) ||
+        (id.x == 257 && id.y == 257) ||
+        (id.x == 254 && id.y == 255) ||
+        (id.x == 258 && id.y == 257) ||
+        (id.x == 259 && id.y == 257) ||
+        (id.x == 254 && id.y == 257) ||
+        (id.x == 253 && id.y == 257))
+    {
+        isLivingCell = true;
+    }
+
+    OutputTexture[id.xy] = isLivingCell ? LivingCellColor : float4(0.0, 0.0, 0.0, 1.0);
+}
+
+[numthreads(8, 8, 1)]
+void InitGun(uint3 id : SV_DispatchThreadID)
+{
+    bool isLivingCell = false;
+
+    if ((id.x == 256 && id.y == 256) ||
+        (id.x == 255 && id.y == 255) ||
+        (id.x == 254 && id.y == 254) ||
+        (id.x == 255 && id.y == 256) ||
+        (id.x == 255 && id.y == 257) ||
+        (id.x == 254 && id.y == 258) ||
+        (id.x == 253 && id.y == 256) ||
+        (id.x == 252 && id.y == 259) ||
+        (id.x == 252 && id.y == 253) ||
+        (id.x == 251 && id.y == 259) ||
+        (id.x == 251 && id.y == 253) ||
+        (id.x == 250 && id.y == 258) ||
+        (id.x == 250 && id.y == 254) ||
+        (id.x == 249 && id.y == 256) ||
+        (id.x == 249 && id.y == 255) ||
+        (id.x == 249 && id.y == 257) ||
+        (id.x == 240 && id.y == 256) ||
+        (id.x == 240 && id.y == 255) ||
+        (id.x == 239 && id.y == 256) ||
+        (id.x == 239 && id.y == 255) ||
+        (id.x == 259 && id.y == 255) ||
+        (id.x == 259 && id.y == 254) ||
+        (id.x == 259 && id.y == 253) ||
+        (id.x == 260 && id.y == 255) ||
+        (id.x == 260 && id.y == 254) ||
+        (id.x == 260 && id.y == 253) ||
+        (id.x == 261 && id.y == 256) ||
+        (id.x == 261 && id.y == 252) ||
+        (id.x == 263 && id.y == 257) ||
+        (id.x == 263 && id.y == 256) ||
+        (id.x == 263 && id.y == 252) ||
+        (id.x == 263 && id.y == 251) ||
+        (id.x == 273 && id.y == 254) ||
+        (id.x == 273 && id.y == 253) ||
+        (id.x == 274 && id.y == 254) ||
+        (id.x == 274 && id.y == 253))
+    {
+        isLivingCell = true;
+    }
+
+    OutputTexture[id.xy] = isLivingCell ? LivingCellColor : float4(0.0, 0.0, 0.0, 1.0);
+}
